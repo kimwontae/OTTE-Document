@@ -1,0 +1,42 @@
+INSERT INTO USER_T(USERNUM,USERID,NATIONID,USEREMAIL,USERPASSWORD,USERCATEGORY,USERCLASS,USERPNUM)
+VALUES (USER_T_S.NEXTVAL,'아무개',10,'아무개@naver.com','123456',4,3,01012341234); -- 회원가입 ---
+
+SELECT userid || '님, 로그인 하셨습니다.' FROM user_t WHERE userID = '이서현' AND userPASSWORD = '3514'; -- 로그인
+
+UPDATE user_t  SET userid = '김서현' WHERE userid= '이서현'; -- 회원 아이디 수정--
+
+UPDATE user_t  SET userpassword = '99999' WHERE user_id='김서현' and userpassword = '3514'; -- 비밀번호 변경--
+
+DELETE user_t WHERE usernUM = '52'; -- 회원정보 삭제--
+
+SELECT userid FROM user_t WHERE useremail = '김상열@daum.net'; -- 아이디 찾기--
+
+SELECT userpassword FROM user_t WHERE userid = '김상열' and useremail = '김상열@daum.net'; -- 비밀번호 찾기--
+
+UPDATE user_t  SET userpassword = '99999' WHERE userid='김서현' and userpassword = '3514'; -- 비밀번호 변경--
+
+INSERT INTO review_T(reviewid,usernum,contentsid,reviewscore,reviewnatter,reviewdate)
+VALUES(1,10,10,5,'너무 재미 있었어요',sysdate); --평점 남기기--
+
+select*from review_t where usernum=10; -- 평가 항목 조회--
+
+
+INSERT INTO CONTENTS_T(CONTENTS_ID,NATION_ID,OTT_ID,GRADE_ID,CLASS_ID,CONTENTS_TITLE,CONTENTS_SUMMARY,CONTENTS_YEARS,CONTENTS_SEASON,CONTENTS_EPISODE,CONTENTS_SCORE,CONTENTS_DURATION)
+VALUES(CONTENTS_T_S.NEXTVAL,'10','1','5','2','테스트 데이터','야근하면서 만들었어요','2021','1','9','0','0'); --영상물 상세정보 관리--
+
+SELECT * from contents_t where contentstitle = '오징어 게임'; -- 제목으로 작품 검색--
+
+select c.contentstitle, gt.genrename from  contents_t c, genrejoin g, genre_t gt where g.contentsid= c.contentsid and g.genreid=gt.genreid and g.genreid = 3; --장르로 작품 검색--
+
+select c.contentstitle, a.actorname from  contents_t c, actorjoin aj, actor_t a where aj.contentsid= c.contentsid and a.actorid=aj.actorid and a.actorid = 273; -- 배우 이름으로 작품 검색
+
+select c.contentstitle,c.contentsscore, gt.genrename from  contents_t c, genrejoin g, genre_t gt where g.contentsid= c.contentsid and g.genreid=gt.genreid and g.genreid = 3 ORDER BY c.CONTENTSSCORE DESC; -- 장르별 평점순 정렬
+
+
+/*전체 최신*/
+SELECT * FROM CONTENTS_T ORDER BY CONTENTSSTART DESC;
+/*한국 최신*/
+SELECT * FROM CONTENTS_T WHERE NATIONCODE='KR' ORDER BY CONTENTSSTART DESC;
+/*외국 최신*/
+SELECT * FROM CONTENTS_T WHERE NATIONCODE NOT IN 'KR' ORDER BY CONTENTSSTART DESC;
+
